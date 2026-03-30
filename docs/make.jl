@@ -13,12 +13,22 @@ Configuration and build process:
 
 using Documenter, MyDocumentation
 
+# Determine environment (CI or local)
+is_ci = get(ENV, "CI", false) == "true" || get(ENV, "GITHUB_ACTIONS", "false") == "true"
+
+# Determine remotes based on environment
+remotes = if is_ci
+    nothing  # Let deploydocs() handle remotes on CI
+else
+    nothing  # Disable for local development
+end
+
 # Define the documentation structure
 makedocs(
     # Site metadata
     sitename="MyDocumentation.jl",
     authors="Your Name",
-    remotes=nothing,  # Disable source links (work locally without Git)
+    remotes=remotes,
     
     # Build options
     clean=true,
@@ -44,18 +54,21 @@ makedocs(
         ],
         "Contributing" => "contributing.md",
     ],
+    
+    # HTML format configuration for GitHub Pages compatibility
+    format = Documenter.HTML(
+        prettyurls = is_ci,  # Enable pretty URLs on CI/GitHub Pages
+        canonical = "https://ophelialabs.github.io/d/",  # Your documentation URL
+        assets = String[],
+    ),
 )
 
 # Deploy documentation to GitHub Pages
-# Uncomment and customize when pushing to GitHub
-#=
+# This is called by GitHub Actions workflow
 deploydocs(
-    repo="github.com/YOUR_USERNAME/MyDocumentation.jl",  # Change this!
+    repo="github.com/ophelialabs/d.git",
     target="build",
     branch="gh-pages",
     devbranch="main",
-    push_preview=true,
-    # Optionally add versioning:
-    # versions = ["stable" => "v^", "v#.#" => "v#.#", "devel" => "main"],
+    push_preview=false,
 )
-=#

@@ -59,7 +59,7 @@ makedocs(
     format = Documenter.HTML(
         prettyurls = is_ci,  # Enable pretty URLs on CI/GitHub Pages
         canonical = "https://ophelialabs.github.io/d/",  # Your documentation URL
-        assets = String[],
+        # Note: omitting assets uses Documenter's default theme (CSS/JS/styling)
     ),
 )
 

@@ -48,3 +48,17 @@ jobs:
           julia --project make.jl
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CI: true
+
+      - name: Verify deployment
+        if: always()
+        run: |
+          echo "✓ Documentation build completed"
+          if [ -d "docs/build" ]; then
+            echo "✓ Build directory exists"
+            echo "Build contents:"
+            ls -la docs/build/ | head -20
+          else
+            echo "✗ Build directory not found"
+            exit 1
+          fi

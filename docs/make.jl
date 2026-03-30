@@ -48,7 +48,7 @@ makedocs(
 
 # Deploy documentation to GitHub Pages
 # Uncomment and customize when pushing to GitHub
-#=
+
 deploydocs(
     repo="github.com/YOUR_USERNAME/MyDocumentation.jl",  # Change this!
     target="build",
@@ -58,4 +58,4 @@ deploydocs(
     # Optionally add versioning:
     # versions = ["stable" => "v^", "v#.#" => "v#.#", "devel" => "main"],
 )
-=#
+

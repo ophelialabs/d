@@ -1,5 +1,5 @@
 """
-Documenter.jl build script for MyDocumentation
+Documenter.jl build script forMyDocumentation
 
 This script builds the documentation site and can be run with:
     julia --project=docs docs/make.jl
@@ -11,7 +11,11 @@ Configuration and build process:
 - Deploys to GitHub Pages (when run in CI)
 """
 
-using Documenter, MyDocumentation
+using Documenter
+
+# Add parent directory to load path for local package
+push!(LOAD_PATH, "..")
+using MyDocumentation
 
 # Determine environment (CI or local)
 is_ci = get(ENV, "CI", false) == "true" || get(ENV, "GITHUB_ACTIONS", "false") == "true"

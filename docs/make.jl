@@ -65,10 +65,20 @@ makedocs(
 
 # Deploy documentation to GitHub Pages
 # This is called by GitHub Actions workflow
+# On CI, use GITHUB_TOKEN passed through environment
+github_token = get(ENV, "GITHUB_TOKEN", nothing)
+repo_url = if is_ci && github_token !== nothing
+    "https://$(github_token)@github.com/ophelialabs/d.git"
+else
+    "github.com/ophelialabs/d.git"
+end
+
 deploydocs(
-    repo="github.com/ophelialabs/d.git",
+    repo=repo_url,
     target="build",
     branch="gh-pages",
     devbranch="main",
     push_preview=false,
 )
+
+# Note: Also supports DOCUMENTER_KEY environment variable for SSH deployment

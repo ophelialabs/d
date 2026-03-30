@@ -37,6 +37,11 @@ jobs:
           cd docs
           julia --project -e 'using Pkg; Pkg.instantiate()'
 
+      - name: Configure git for deployment
+        run: |
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+
       - name: Build and deploy documentation
         run: |
           cd docs
